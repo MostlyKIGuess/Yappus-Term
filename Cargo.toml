@@ -2,6 +2,9 @@
 name = "yappus-term"
 version = "0.1.0"
 edition = "2021"
+description = "A terminal interface for your AI terminal assistant."
+license = "MIT"
+repository = "https://github.com/MostlyKIGuess/Yappus-Term"
 
 [dependencies]
 dotenvy = "0.15"
@@ -16,3 +19,7 @@ clap = { version = "4.4", features = ["derive"] }
 [[bin]]
 name = "yappus"
 path = "src/main.rs"
+
+
+[publishing]
+registry = "https://github.com/MostlyKIGuess/yappus-term"
