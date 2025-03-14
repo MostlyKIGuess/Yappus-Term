@@ -1,0 +1,15 @@
+[package]
+name = "yappus-term"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+dotenvy = "0.15"
+reqwest = { version = "0.11", features = ["blocking", "json"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+gemini-ai = "0.1.167"
+
+[[bin]]
+name = "yappus"
+path = "src/main.rs"
