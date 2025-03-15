@@ -84,6 +84,34 @@ pub fn clear_history(history_path: &str) -> bool {
         }
     }
 }
+pub fn read_file_content(file_path: &str) -> Result<String, std::io::Error> {
+    use std::fs;
+    fs::read_to_string(file_path)
+}
+
+pub fn list_directory_files(dir_path: Option<&str>) -> Result<Vec<std::path::PathBuf>, std::io::Error> {
+    let path = match dir_path {
+        Some(p) => std::path::PathBuf::from(p),
+        None => std::env::current_dir()?,
+    };
+    
+    let mut entries = Vec::new();
+    for entry in std::fs::read_dir(path)? {
+        let entry = entry?;
+        entries.push(entry.path());
+    }
+    
+    Ok(entries)
+}
+
+pub fn sanitize_file_content(content: &str) -> String {
+    content
+        .lines()
+        .filter(|line| !line.starts_with("#!"))
+        .collect::<Vec<_>>()
+        .join("\n")
+}
+
 
 pub fn display_config(config_dir: &PathBuf) {
     let config_file = config_dir.join("config.json");

@@ -37,6 +37,11 @@ enum Commands {
     Export {
         path: Option<String>,
     },
+    File {
+        path: String,
+        #[clap(trailing_var_arg = true, allow_hyphen_values = true)]
+        query: Vec<String>,
+    },
 }
 
 fn main() {
@@ -98,6 +103,37 @@ fn main() {
             let export_path = path.unwrap_or_else(|| "yappus_history_export.json".to_string());
             utils::export_history(&history_path, &export_path);
         },
+        Some(Commands::File { path, query }) => {
+            println!("Reading content from: {}", path);
+            match utils::read_file_content(&path) {
+                Ok(content) => {
+                    let user_query = if !query.is_empty() {
+                        query.join(" ")
+                    } else {
+                        "Explain this file".to_string()
+                    };
+                    
+                    // sanitization !! Very important
+                    let sanitized = utils::sanitize_file_content(&content)
+                        .replace('"', "\\\"")  // escape double quotes
+                        .replace('\'', "");    // remove single quotes
+                    
+                    let truncated_content = if sanitized.len() > 4000 {
+                        format!("{}... (truncated)", &sanitized[..4000])
+                    } else {
+                        sanitized
+                    };
+                    
+                    let file_query = format!(
+                        "File '{}' contains:\n\n{}\n\nQuestion about this file: {}", 
+                        path, truncated_content, user_query
+                    );
+                    
+                    process_query(&file_query, &api_key, &config_dir, &history_path);
+                },
+                Err(e) => println!("Error reading file: {}", e),
+            }
+        },
         None => {
             if !cli.query.is_empty() {
                 let query = cli.query.join(" ");
@@ -111,7 +147,7 @@ fn main() {
 
 fn process_query(query: &str, api_key: &str, config_dir: &PathBuf, history_path: &str) {
 
-    let recent_history = memory::get_recent_history(history_path, 3);
+    let recent_history = memory::get_recent_history(history_path, 5);
 
     let context_query = if !recent_history.is_empty() {
         format!("Previous conversations for context:\n{}\n\nNew query: {}", recent_history, query)
@@ -187,8 +223,78 @@ fn interactive_mode(api_key: &str, config_dir: &PathBuf, history_path: &str) {
                     utils::export_history(history_path, &export_path);
                 },
                 "/clear" => {
-                    // clear terminal
                     print!("\x1B[2J\x1B[1;1H");
+                },
+                "/ls" => {
+                    let dir_path = if parts.len() > 1 { Some(parts[1]) } else { None };
+                    match utils::list_directory_files(dir_path) {
+                        Ok(entries) => {
+                            let current_dir = if let Some(path) = dir_path {
+                                std::path::PathBuf::from(path)
+                            } else {
+                                std::env::current_dir().unwrap_or_default()
+                            };
+                            println!("Contents of {}:", current_dir.display());
+                            
+                            println!("Directories:");
+                            for entry in &entries {
+                                if entry.is_dir() {
+                                    let name = entry.file_name().unwrap_or_default().to_string_lossy();
+                                    println!("  📁 {}", name);
+                                }
+                            }
+                            
+                            println!("Files:");
+                            for entry in &entries {
+                                if entry.is_file() {
+                                    let name = entry.file_name().unwrap_or_default().to_string_lossy();
+                                    let size = match entry.metadata() {
+                                        Ok(meta) => format!("{} KB", meta.len() / 1024),
+                                        Err(_) => "? KB".to_string(),
+                                    };
+                                    println!("  📄 {:<20} {}", name, size);
+                                }
+                            }
+                        },
+                        Err(e) => println!("Error listing directory: {}", e),
+                    }
+                },
+                "/file" => {
+                    if parts.len() >= 2 {
+                        let file_path = parts[1];
+                        println!("Reading content from: {}", file_path);
+                        match utils::read_file_content(file_path) {
+                            Ok(content) => {
+                                let user_query = if parts.len() > 2 {
+                                    parts[2..].join(" ")
+                                } else {
+                                    "Explain this file".to_string()
+                                };
+                                
+                                // sanitize and escape quotes
+                                let sanitized = utils::sanitize_file_content(&content)
+                                    .replace('"', "\\\"") // escqpe double quotes
+                                    .replace('\'', "");   // remove single quotes as well
+
+                                let truncated_content = if sanitized.len() > 4000 {
+                                    format!("{}... (truncated)", &sanitized[..4000])
+                                } else {
+                                    sanitized
+                                };
+                                
+                                let file_query = format!(
+                                    "File '{}' contains:\n\n{}\n\nQuestion about this file: {}", 
+                                    file_path, truncated_content, user_query
+                                );
+
+                                println!("{}", file_query);
+                                process_query(&file_query, api_key, config_dir, history_path);
+                            },
+                            Err(e) => println!("Error reading file: {}", e),
+                        }
+                    } else {
+                        println!("Usage: /file <file_path> [question about file]");
+                    }
                 },
                 _ => println!("Unknown command. Type /help for available commands.")
             }

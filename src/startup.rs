@@ -172,6 +172,8 @@ pub fn display_help() {
     println!("  /help         - Show this help message");
     println!("  /model [name] - View or change the Gemini model");
     println!("  /history      - View your chat history");
+    println!("  /ls [path]      - List files in current or specified directory");
+    println!("  /file <path> [q]- Include file content in your query");
     println!("  /clearhistory - Clear your chat history");
     println!("  /setup        - Run the setup process again");
     println!("  /version      - Show version information");

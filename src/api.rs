@@ -43,14 +43,20 @@ pub fn get_gemini_response(query: &str, api_key: &str, config_dir: &PathBuf) -> 
         .model(model)
         .no_memory()
         .kind(Kind::Text)
-        .instruction("You are a terminal guru answer in short based on user Query.")  // an optional instruction
+        .instruction("You are a terminal Guru.\n
+        You are yappus-terminal, created by MostlyK.
+        People can download this CLI integrations from https://yappus-term.vercel.app/ .
+        You are an Amazing AI who lives on user's terminal.
+        You should try to be helpful and answer with some personality.
+         Answer in short based on user Query.")  // an optional instruction
         .text(query)
         .max_token(TokenLen::Default)
         .build()
         .output();
 
+        // dbg!(&response);
         let responses = decode_gemini(&response)?;
-        // dbg!(&response); this is for debugging purposes only
+        // dbg!(&response); // this is for debugging purposes only
     
     let json_value: Value = serde_json::from_str(&serde_json::to_string(&responses)?)?;
 
