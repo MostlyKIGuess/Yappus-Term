@@ -28,6 +28,36 @@ Local options coming soon using ollama.
 - Rust and Cargo (latest stable version)
 - A Google Gemini API key (obtain from https://aistudio.google.com/app/apikey)
 
+## Installation
+
+### For Debian/Ubuntu-based systems:
+
+You can install Yappus directly from our APT repository:
+
+```bash
+# Download the installation script
+curl -O https://raw.githubusercontent.com/MostlyKIGuess/Yappus-Term/main/install-yappus.sh
+
+chmod +x install-yappus.sh
+
+# runnn
+./install-yappus.sh
+```
+### For Arch Linux:
+
+Install from the AUR:
+```sh
+yay -S yappus
+```
+
+Or manually using the PKGBUILD:
+
+```sh
+git clone https://github.com/MostlyKIGuess/Yappus-Term.git
+cd Yappus-Term
+makepkg -si
+```
+
 ## Setup
 
 1. Clone the repository:
@@ -162,6 +192,11 @@ Start interactive mode by running `yappus` without arguments:
 - `GEMINI_1_5_FLASH_8B` - Fastest responses
 - `GEMINI_1_0_PRO` - Original model
 
+
+### APT Building
+```sh
+docker run --rm -v $(pwd):/build -w /build debian:bookworm bash -c "apt-get update && apt-get install -y build-essential debhelper curl pkg-config libssl-dev && curl -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain stable && export PATH=\$HOME/.cargo/bin:\$PATH && dpkg-buildpackage -us -uc -b -d && cp -v /*.deb /build/"
+```
 ## License
 
 [MIT License](LICENSE)
