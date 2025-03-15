@@ -1,0 +1,7 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: yappus
+Source: https://github.com/MostlyKIGuess/Yappus-Term
+
+Files: *
+Copyright: 2023-2025 MostlyK
+License: MIT

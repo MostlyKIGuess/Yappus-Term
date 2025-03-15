@@ -1,0 +1,14 @@
+#!/usr/bin/make -f
+export CARGO_HOME=/tmp/cargo
+export PATH := $(HOME)/.cargo/bin:/usr/local/bin:$(PATH)  
+
+%:
+	dh $@
+
+override_dh_auto_build:
+	if [ ! -f $(HOME)/.cargo/bin/rustc ]; then curl -sSf https://sh.rustup.rs | sh -s -- -y; fi
+	$(HOME)/.cargo/bin/rustc --version 
+	$(HOME)/.cargo/bin/cargo build --release
+
+override_dh_auto_install:
+	install -D -m755 target/release/yappus debian/yappus/usr/bin/yappus

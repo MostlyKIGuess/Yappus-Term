@@ -7,3 +7,17 @@ Cargo.lock
 .env
 
 chat_history.json
+
+/node_modules/
+/yappus-website/node_modules/
+
+# Debian build residue omgggggg
+*.buildinfo
+*.changes
+*.deb
+debian/.debhelper/
+debian/debhelper-build-stamp
+debian/yappus/
+debian/yappus.substvars
+debian/files
+debian/source
