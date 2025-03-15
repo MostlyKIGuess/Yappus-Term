@@ -4,7 +4,7 @@ Architecture: amd64
 Maintainer: MostlyK <bruvistrue93@gmail.com>
 Installed-Size: 3136
 Depends: libc6 (>= 2.34), libgcc-s1 (>= 4.2), libssl3 (>= 3.0.0)
-Filename: ./yappus_0.1.0_amd64.deb
+Filename: dists/stable/main/binary-amd64/yappus_0.1.0_amd64.deb
 Size: 865704
 MD5sum: 4c0b875c16738f882d172105c95b2c44
 SHA1: 5d14eb42fce0af632dec408fbab008d42b3905ac
