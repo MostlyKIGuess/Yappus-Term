@@ -110,7 +110,16 @@ fn main() {
 }
 
 fn process_query(query: &str, api_key: &str, config_dir: &PathBuf, history_path: &str) {
-    match api::get_gemini_response(query, api_key, config_dir) {
+
+    let recent_history = memory::get_recent_history(history_path, 3);
+
+    let context_query = if !recent_history.is_empty() {
+        format!("Previous conversations for context:\n{}\n\nNew query: {}", recent_history, query)
+    } else{
+        query.to_string()
+    };
+
+    match api::get_gemini_response(&context_query, api_key, config_dir) {
         Ok(response) => {
             let formatted_response = utils::render_response(&response);
             println!("{}", formatted_response);
