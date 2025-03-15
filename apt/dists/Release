@@ -1,0 +1,7 @@
+Origin: Yappus Terminal
+Label: Yappus
+Suite: stable
+Codename: stable
+Architectures: amd64
+Components: main
+Description: Yappus Terminal Repository
