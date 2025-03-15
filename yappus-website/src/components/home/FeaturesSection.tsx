@@ -1,5 +1,5 @@
 import React from "react";
-import { FaTerminal, FaHistory, FaCode } from "react-icons/fa";
+import { FaTerminal, FaHistory, FaCode, FaAddressBook, FaFolderOpen, FaLaptop } from "react-icons/fa";
 import FeatureCard from "../ui/FeatureCard";
 
 export default function FeaturesSection() {
@@ -22,6 +22,21 @@ export default function FeaturesSection() {
           icon={<FaCode className="text-purple-400" size={24} />}
           title="Syntax Highlighting"
           description="Clear syntax highlighting for code blocks in your AI responses."
+        />
+        <FeatureCard
+          icon={<FaAddressBook className="text-orange-400" size={24} />}
+          title="Context Awareness"
+          description="Maintains conversation context across commands and integrates file contents for relevant responses."
+        />
+         <FeatureCard
+          icon={<FaLaptop className="text-green-400" size={24} />}
+          title="Local Mode (Coming Soon)"
+          description="Interact using a local LLM."
+        />
+         <FeatureCard
+          icon={<FaFolderOpen className="text-green-400" size={24} />}
+          title=" File Exploration (Coming Soon)"
+          description="Explore your file system directly using yappus."
         />
       </div>
     </section>

@@ -24,6 +24,16 @@ export default function ExamplesSection() {
           query="Explain the difference between tar and zip"
           response="TAR: Archive tool that bundles files without compression by default. Add compression with flags like -z (gzip). Good for preserving Unix permissions.\n\nZIP: Both archives and compresses files. Better cross-platform compatibility with Windows. Allows adding/extracting single files without processing the whole archive."
         />
+        <ExampleQuery
+          query="Code Analysis with File Context"
+          response={`$ yappus /file src/app.js
+File content added to conversation context.
+$ yappus What could be improved in this code?
+Based on the file content, here are some suggestions:
+1. Add input validation for the user data
+2. Implement error handling for the API calls
+3. Consider using async/await instead of promises`}
+        />
       </div>
     </div>
   );

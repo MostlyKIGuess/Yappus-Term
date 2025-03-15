@@ -28,6 +28,18 @@ export default function TerminalPreview() {
           <p className="mt-1 text-yellow-400">
             find / -type f -size +100M -exec ls -lh {} \; | sort -rh
           </p>
+          <p className="mt-4 text-gray-400">&gt; yappus /file package.json</p>
+          <p className="mt-2 text-blue-400">
+            Reading content from: package.json
+            This `package.json` file is the project&apos;s manifest. It describes the project&apos;s name, version, dependencies, and scripts.  Essentially, it tells your computer (and tools like Node.js) everything it needs to know about the project to build and run it.  Specifically, this one for a Next.js site using various frontend libraries..
+          </p>
+          <p className="text-gray-400 mt-4">&gt; yappus What dependencies does this project use?</p>
+          <p className="mt-2 text-blue-400">
+            Based on your package.json, this project uses:
+            - React v18.2.0
+            - Next.js v13.4.1
+            - TailwindCSS v3.3.2
+          </p>
           <p className="text-gray-400 mt-4">&gt; _</p>
         </div>
       </div>

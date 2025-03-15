@@ -5,7 +5,7 @@ import HistorySection from "./HistorySection";
 import ConfigSection from "./ConfigSection";
 import CommandsSection from "./CommandsSection";
 import ExamplesSection from "./ExamplesSection";
-
+import ContextAwarenessSection from "./ContextAwarenessSection";
 export default function DocumentationSection() {
   return (
     <section id="docs" className="px-4 py-20 max-w-7xl mx-auto">
@@ -19,6 +19,7 @@ export default function DocumentationSection() {
         <HistorySection />
         <ConfigSection />
         <CommandsSection />
+        <ContextAwarenessSection/>
         <ExamplesSection />
       </div>
     </section>
