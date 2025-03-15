@@ -162,6 +162,7 @@ pub fn display_help() {
     println!("  yappus model [MODEL_NAME]    - View or change the Gemini model");
     println!("  yappus history              - View your chat history");
     println!("  yappus clear-history        - Clear your chat history");
+    println!("  yappus file PATH [QUERY]    - Include file content in your query");
     println!("  yappus setup                - Run the setup process again");
     println!("  yappus version              - Show version information");
     println!("  yappus config               - Display current configuration");
