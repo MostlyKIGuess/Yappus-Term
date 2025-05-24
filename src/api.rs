@@ -1,6 +1,6 @@
 use reqwest::blocking::Client;
 use serde_json::{json, Value};
-use std::path::PathBuf;
+use std::path::Path;
 
 #[derive(Debug, Clone)]
 pub enum Models {
@@ -23,7 +23,7 @@ impl Models {
     }
 }
 
-pub fn get_model_from_config(config_dir: &PathBuf) -> Models {
+pub fn get_model_from_config(config_dir: &Path) -> Models {
     let config_file = config_dir.join("config.json");
 
     if let Ok(config_data) = std::fs::read_to_string(&config_file) {
@@ -47,7 +47,7 @@ pub fn get_model_from_config(config_dir: &PathBuf) -> Models {
 pub fn get_gemini_response(
     query: &str,
     api_key: &str,
-    config_dir: &PathBuf,
+    config_dir: &Path,
 ) -> Result<String, Box<dyn std::error::Error>> {
     let model = get_model_from_config(config_dir);
     let model_name = model.to_api_name();

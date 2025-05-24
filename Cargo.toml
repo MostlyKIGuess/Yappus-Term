@@ -1,10 +1,10 @@
 [package]
 name = "yappus-term"
-version = "0.1.0"
+version = "1.1.0"
 edition = "2021"
 description = "A terminal interface for your AI terminal assistant."
 license = "MIT"
-repository = "https://github.com/MostlyKIGuess/Yappus-Term"
+repository = "https://github.com/MostlyKIGuess/yappus-Term"
 
 [dependencies]
 dotenvy = "0.15"
@@ -14,11 +14,11 @@ serde_json = "1.0"
 directories = "4.0"
 termimad = "0.20"
 clap = { version = "4.4", features = ["derive"] }
+rustyline = { version = "13.0", features = ["with-file-history"] }
+dirs = "6.0.0"
+colored = "2.0"
+crossterm = "0.27"
 
 [[bin]]
 name = "yappus"
 path = "src/main.rs"
-
-
-[publishing]
-registry = "https://github.com/MostlyKIGuess/yappus-term"

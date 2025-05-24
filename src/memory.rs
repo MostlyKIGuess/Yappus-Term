@@ -1,6 +1,6 @@
-use std::fs::{OpenOptions, File};
-use std::io::{BufReader, Write, BufRead};
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
+use std::fs::{File, OpenOptions};
+use std::io::{BufRead, BufReader, Write};
 
 #[derive(Serialize, Deserialize)]
 pub struct ChatLog {
@@ -23,24 +23,25 @@ pub fn load_chat(file_path: &str) -> Vec<ChatLog> {
     let file = File::open(file_path).unwrap_or_else(|_| File::create(file_path).unwrap());
     let reader = BufReader::new(file);
 
-    reader.lines()
+    reader
+        .lines()
         .filter_map(|line| serde_json::from_str::<ChatLog>(&line.unwrap()).ok())
         .collect()
 }
 
-pub fn get_recent_history(history_path: &str, limit: usize) -> String{
+pub fn get_recent_history(history_path: &str, limit: usize) -> String {
     let chat_history = load_chat(history_path);
     if chat_history.is_empty() {
         return String::new();
     }
     let recent_chats = chat_history.iter().rev().take(limit).rev();
-    
+
     let mut result = String::new();
     for (idx, entry) in recent_chats.enumerate() {
         result.push_str(&format!("--- Previous Conversation #{} ---\n", idx + 1));
         result.push_str(&format!("User: {}\n", entry.user));
         result.push_str(&format!("AI: {}\n\n", entry.bot));
     }
-    
+
     result
 }

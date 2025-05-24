@@ -1,6 +1,6 @@
-use std::path::PathBuf;
 use directories::ProjectDirs;
 use std::fs;
+use std::path::{Path, PathBuf};
 
 pub fn get_config_dir() -> PathBuf {
     if let Some(proj_dirs) = ProjectDirs::from("com", "yappus", "yappus-term") {
@@ -19,11 +19,11 @@ pub fn render_response(text: &str) -> String {
     formatted = formatted.replace("```python", "\x1b[1;32m"); // Green for Python
     formatted = formatted.replace("```rust", "\x1b[1;31m"); // Red for Rust
     formatted = formatted.replace("```", "\x1b[0m"); // Reset color at end of code block
-    
+
     formatted
 }
 
-pub fn set_model(model_name: &str, config_dir: &PathBuf) -> bool {
+pub fn set_model(model_name: &str, config_dir: &Path) -> bool {
     let config_file = config_dir.join("config.json");
     let model = match model_name.to_uppercase().as_str() {
         "GEMINI_1_5_FLASH" => "GEMINI_1_5_FLASH",
@@ -37,17 +37,15 @@ pub fn set_model(model_name: &str, config_dir: &PathBuf) -> bool {
             "GEMINI_1_5_FLASH"
         }
     };
-    
+
     // Write to config file
-    let config = serde_json::json!({
-        "model": model
-    });
-    
+    let config = serde_json::json!({ "model": model });
+
     match std::fs::write(config_file, serde_json::to_string_pretty(&config).unwrap()) {
         Ok(_) => {
             println!("Model set to: {}", model);
             true
-        },
+        }
         Err(e) => {
             eprintln!("Failed to save model config: {}", e);
             false
@@ -57,13 +55,13 @@ pub fn set_model(model_name: &str, config_dir: &PathBuf) -> bool {
 
 pub fn view_history(history_path: &str) {
     use crate::memory;
-    
+
     let chat_history = memory::load_chat(history_path);
     if chat_history.is_empty() {
         println!("No chat history found.");
         return;
     }
-    
+
     println!("\n--- Chat History ---");
     for (idx, entry) in chat_history.iter().enumerate() {
         println!("Chat #{}", idx + 1);
@@ -77,7 +75,7 @@ pub fn clear_history(history_path: &str) -> bool {
         Ok(_) => {
             println!("Chat history cleared.");
             true
-        },
+        }
         Err(e) => {
             eprintln!("Failed to clear history: {}", e);
             false
@@ -89,21 +87,6 @@ pub fn read_file_content(file_path: &str) -> Result<String, std::io::Error> {
     fs::read_to_string(file_path)
 }
 
-pub fn list_directory_files(dir_path: Option<&str>) -> Result<Vec<std::path::PathBuf>, std::io::Error> {
-    let path = match dir_path {
-        Some(p) => std::path::PathBuf::from(p),
-        None => std::env::current_dir()?,
-    };
-    
-    let mut entries = Vec::new();
-    for entry in std::fs::read_dir(path)? {
-        let entry = entry?;
-        entries.push(entry.path());
-    }
-    
-    Ok(entries)
-}
-
 pub fn sanitize_file_content(content: &str) -> String {
     content
         .lines()
@@ -112,13 +95,12 @@ pub fn sanitize_file_content(content: &str) -> String {
         .join("\n")
 }
 
-
-pub fn display_config(config_dir: &PathBuf) {
+pub fn display_config(config_dir: &Path) {
     let config_file = config_dir.join("config.json");
-    
+
     println!("\n=== Yappus Configuration ===");
     println!("Configuration directory: {}", config_dir.display());
-    
+
     if let Ok(config_data) = fs::read_to_string(&config_file) {
         if let Ok(config) = serde_json::from_str::<serde_json::Value>(&config_data) {
             if let Some(model_name) = config["model"].as_str() {
@@ -128,7 +110,7 @@ pub fn display_config(config_dir: &PathBuf) {
     } else {
         println!("No configuration file found or unable to read it.");
     }
-    
+
     let history_path = config_dir.join("chat_history.json");
     if history_path.exists() {
         if let Ok(metadata) = fs::metadata(&history_path) {
