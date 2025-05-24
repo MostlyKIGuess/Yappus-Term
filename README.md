@@ -183,14 +183,14 @@ Start interactive mode by running `yappus` without arguments:
 - `/clear` - Clear the terminal screen
 - `exit` - Exit the application
 
-### Available Models
+## Available Models
 
-- `GEMINI_1_5_FLASH` - Default model, good balance of speed and capability
-- `GEMINI_1_5_PRO_002` - Most powerful model
-- `GEMINI_1_5_PRO` - Very capable model
-- `GEMINI_1_5_FLASH_002` - Good performance
-- `GEMINI_1_5_FLASH_8B` - Fastest responses
-- `GEMINI_1_0_PRO` - Original model
+- `GEMINI_FLASH` (2.0) - Default model, latest and greatest
+- `GEMINI_2_5_FLASH` - High performance with excellent reasoning
+- `GEMINI_2_5_PRO` - Most capable model for complex tasks
+- `GEMINI_1_5_FLASH` - Fast and efficient
+- `GEMINI_1_5_PRO` - Powerful legacy model
+
 
 
 ### APT Building

@@ -22,41 +22,42 @@ export default function ModelSection() {
         <DocExample
           title="Change Model"
           description="Switch to a more powerful model"
-          command="yappus model GEMINI_1_5_PRO_002"
+          command="yappus model GEMINI"
         />
       </div>
 
-      <div className="mt-6 grid grid-cols-2 md:grid-cols-3 gap-4">
-        <ModelBadge
-          name="GEMINI_1_5_FLASH"
-          description="Default - Good balance"
-        />
-        <ModelBadge
-          name="GEMINI_1_5_PRO_002"
-          description="Most powerful"
-          colorClass="from-purple-500 to-pink-500"
-        />
-        <ModelBadge
-          name="GEMINI_1_5_PRO"
-          description="Very capable"
-          colorClass="from-blue-500 to-indigo-600"
-        />
-        <ModelBadge
-          name="GEMINI_1_5_FLASH_002"
-          description="Good performance"
-          colorClass="from-emerald-500 to-teal-600"
-        />
-        <ModelBadge
-          name="GEMINI_1_5_FLASH_8B"
-          description="Fastest responses"
-          colorClass="from-yellow-500 to-amber-600"
-        />
-        <ModelBadge
-          name="GEMINI_1_0_PRO"
-          description="Original model"
-          colorClass="from-gray-500 to-gray-600"
-        />
-      </div>
+      
+            <div className="mt-6 grid grid-cols-2 md:grid-cols-3 gap-4">
+              <ModelBadge
+                name="GEMINI_1_5_FLASH"
+                description="Default - Good balance"
+              />
+              <ModelBadge
+                name="GEMINI_1_5_PRO_002"
+                description="Most powerful"
+                colorClass="from-purple-500 to-pink-500"
+              />
+              <ModelBadge
+                name="GEMINI_1_5_PRO"
+                description="Very capable"
+                colorClass="from-blue-500 to-indigo-600"
+              />
+              <ModelBadge
+                name="GEMINI_1_5_FLASH_002"
+                description="Good performance"
+                colorClass="from-emerald-500 to-teal-600"
+              />
+              <ModelBadge
+                name="GEMINI_1_5_FLASH_8B"
+                description="Fastest responses"
+                colorClass="from-yellow-500 to-amber-600"
+              />
+              <ModelBadge
+                name="GEMINI_1_0_PRO"
+                description="Original model"
+                colorClass="from-gray-500 to-gray-600"
+              />
+            </div>
     </div>
   );
 }
