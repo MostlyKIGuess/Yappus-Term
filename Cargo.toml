@@ -5,6 +5,19 @@ edition = "2021"
 description = "A terminal interface for your AI terminal assistant."
 license = "MIT"
 repository = "https://github.com/MostlyKIGuess/yappus-Term"
+authors = ["MostlyK <bruvistrue93@gmail.com>"]
+
+[package.metadata.deb]
+maintainer = "MostlyK <bruvistrue93@gmail.com>"
+copyright = "2024, MostlyK <bruvistrue93@gmail.com>"
+license-file = ["LICENSE", "4"]
+extended-description = """\
+A terminal interface for your AI terminal assistant.
+Yappus is a terminal application that provides an interface to
+ interact with LLMs in your terminal."""
+depends = "$auto"
+section = "utility"
+priority = "optional"
 
 [dependencies]
 dotenvy = "0.15"
