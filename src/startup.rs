@@ -4,7 +4,7 @@ use std::io::{self, Write};
 use std::path::{Path, PathBuf};
 
 pub fn display_version() {
-    println!("\n=== Yappus Terminal v0.1.0 ===");
+    println!("\n=== Yappus Terminal v1.1.0 ===");
     println!("A terminal interface for Google Gemini AI");
     println!("Author: MostlyK <bruvistrue93@gmail.com>");
     println!("Repository: https://github.com/mostlyk/yappus-term");
@@ -113,13 +113,12 @@ pub fn initial_setup(config_dir: &PathBuf) -> bool {
     let _api_key = get_api_key(config_dir);
 
     println!("\nChoose your preferred Gemini model:");
-    println!("1. GEMINI_1_5_FLASH (default, fast responses)");
-    println!("2. GEMINI_1_5_PRO (more capable)");
-    println!("3. GEMINI_1_5_PRO_002 (latest pro version)");
-    println!("4. GEMINI_1_5_FLASH_002 (newer flash model)");
-    println!("5. GEMINI_1_5_FLASH_8B (smaller, faster model)");
-    println!("6. GEMINI_1_0_PRO (original model)");
-    print!("Enter your choice [1-6] or press Enter for default: ");
+    println!("1. GEMINI_FLASH (default, Gemini 2.0)");
+    println!("2. GEMINI_2_5_PRO (most capable)");
+    println!("3. GEMINI_2_5_FLASH (high performance)");
+    println!("4. GEMINI_1_5_PRO (legacy but powerful)");
+    println!("5. GEMINI_1_5_FLASH (fast and efficient)");
+    print!("Enter your choice [1-5] or press Enter for default: ");
     io::stdout().flush().unwrap();
 
     let mut choice = String::new();
@@ -129,13 +128,12 @@ pub fn initial_setup(config_dir: &PathBuf) -> bool {
     let choice = choice.trim();
 
     let model = match choice {
-        "1" | "" => "GEMINI_1_5_FLASH",
-        "2" => "GEMINI_1_5_PRO",
-        "3" => "GEMINI_1_5_PRO_002",
-        "4" => "GEMINI_1_5_FLASH_002",
-        "5" => "GEMINI_1_5_FLASH_8B",
-        "6" => "GEMINI_1_0_PRO",
-        _ => "GEMINI_1_5_FLASH", // def
+        "1" | "" => "GEMINI_FLASH",
+        "2" => "GEMINI_2_5_PRO",
+        "3" => "GEMINI_2_5_FLASH",
+        "4" => "GEMINI_1_5_PRO",
+        "5" => "GEMINI_1_5_FLASH",
+        _ => "GEMINI_FLASH", // def
     };
 
     let config = serde_json::json!({ "model": model });

@@ -11,7 +11,7 @@ export default function FeaturesSection() {
         <FeatureCard
           icon={<FaTerminal className="text-emerald-400" size={24} />}
           title="AI-Powered Terminal"
-          description="Interact with Google Gemini AI models directly from your command line."
+          description="Interact with the latest Gemini 2.0 AI models directly from your command line."
         />
         <FeatureCard
           icon={<FaHistory className="text-blue-400" size={24} />}

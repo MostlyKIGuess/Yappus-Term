@@ -25,6 +25,14 @@ export default function ExamplesSection() {
           response="TAR: Archive tool that bundles files without compression by default. Add compression with flags like -z (gzip). Good for preserving Unix permissions.\n\nZIP: Both archives and compresses files. Better cross-platform compatibility with Windows. Allows adding/extracting single files without processing the whole archive."
         />
         <ExampleQuery
+          query="Switch to the most powerful model"
+          response={`$ yappus model GEMINI_2_5_PRO
+Model set to: GEMINI_2_5_PRO
+
+$ yappus "Analyze this complex algorithm for me"
+Analyzing with Gemini 2.5 Pro - the most capable model for complex reasoning tasks...`}
+        />
+        <ExampleQuery
           query="Code Analysis with File Context"
           response={`$ yappus /file src/app.js
 File content added to conversation context.

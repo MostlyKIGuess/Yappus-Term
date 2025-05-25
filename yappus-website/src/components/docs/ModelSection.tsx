@@ -22,40 +22,36 @@ export default function ModelSection() {
         <DocExample
           title="Change Model"
           description="Switch to a more powerful model"
-          command="yappus model GEMINI"
+          command="yappus model GEMINI_2_5_PRO"
         />
       </div>
 
       
             <div className="mt-6 grid grid-cols-2 md:grid-cols-3 gap-4">
               <ModelBadge
-                name="GEMINI_1_5_FLASH"
-                description="Default - Good balance"
+                name="GEMINI_FLASH"
+                description="Latest Gemini 2.0 model (default)"
+                colorClass="from-emerald-500 to-green-600"
               />
               <ModelBadge
-                name="GEMINI_1_5_PRO_002"
-                description="Most powerful"
+                name="GEMINI_2_5_PRO"
+                description="Most powerful for complex tasks"
                 colorClass="from-purple-500 to-pink-500"
               />
               <ModelBadge
-                name="GEMINI_1_5_PRO"
-                description="Very capable"
+                name="GEMINI_2_5_FLASH"
+                description="High performance with excellent reasoning"
                 colorClass="from-blue-500 to-indigo-600"
               />
               <ModelBadge
-                name="GEMINI_1_5_FLASH_002"
-                description="Good performance"
-                colorClass="from-emerald-500 to-teal-600"
+                name="GEMINI_1_5_PRO"
+                description="Very capable legacy model"
+                colorClass="from-orange-500 to-red-600"
               />
               <ModelBadge
-                name="GEMINI_1_5_FLASH_8B"
-                description="Fastest responses"
+                name="GEMINI_1_5_FLASH"
+                description="Fast and efficient responses"
                 colorClass="from-yellow-500 to-amber-600"
-              />
-              <ModelBadge
-                name="GEMINI_1_0_PRO"
-                description="Original model"
-                colorClass="from-gray-500 to-gray-600"
               />
             </div>
     </div>

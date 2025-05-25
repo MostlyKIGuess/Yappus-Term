@@ -7,21 +7,26 @@ Local options coming soon using ollama.
 ## Features
 
 - Interactive command-line interface for chatting with Gemini AI
-- Support for multiple Gemini models (1.5 Pro, 1.5 Flash, etc.)
+- Support for multiple Gemini models including latest Gemini 2.0 Flash
 - Persistent chat history saved between sessions
 - Command-line arguments for direct queries and configuration
 - Interactive commands within the chat interface
+- File integration with `/file` command for context-aware discussions
+- Directory navigation with built-in file system commands (`/ls`, `/cd`, `/pwd`)
+- Command piping to combine shell commands with AI queries
 - Export chat history to JSON files
 - Configuration management for API keys and model selection
 - Syntax highlighting for code blocks in responses
-- Simple and easy-to-use interface
-
+- Tab completion and command history support
+- Context awareness that maintains conversation flow
 
 ## In Works
-- Using history for more context.
-- Using current directory and .git for more knowledge.
-- Using history to predict next questions and help.
-
+- [ ] Using history for more context.
+- [x] Using current directory and .git for more knowledge.
+- [ ]Using history to predict next questions and help.
+- [ ]Fully local mode using Ollama
+- [~(kinda lol) ]RAG support with document indexing
+- [ ] CMD to include the actual shell commands for better interactive.
 
 ## Prerequisites
 
@@ -62,21 +67,11 @@ makepkg -si
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/yappus-term.git
+   git clone https://github.com/MostlyKIGuess/Yappus-Term.git
    cd yappus-term
    ```
 
-2. Create a `.env` file by copying the example:
-   ```bash
-   cp .env.example .env
-   ```
-
-3. Add your Gemini API key to the `.env` file:
-   ```
-   GEMINI_API_KEY=your_api_key_here
-   ```
-
-   Alternatively, run the application and it will prompt you for an API key during first-time setup.
+2. Run the application and it will prompt you for an API key during first-time setup.
 
 ## Building
 
@@ -126,6 +121,7 @@ The following files are created:
 - `api_key` - Stores your Gemini API key
 - `config.json` - Stores your preferred model configuration
 - `chat_history.json` - Stores your chat history
+- `readline_history.txt` - Stores command history
 
 ## Usage
 
@@ -136,7 +132,7 @@ The following files are created:
 yappus "How do I find large files in Linux?"
 
 # model change, type just yappus model to see the list
-yappus model GEMINI_1_5_PRO_002
+yappus model GEMINI_2_5_PRO
 
 # shows chat history
 yappus history
@@ -156,6 +152,9 @@ yappus config
 # reset or check the api key
 yappus key
 yappus key --reset
+
+# analyze a file with optional query
+yappus file script.sh "explain this script"
 
 # if you wanna export your chats
 yappus export ~/my_chat_export.json
@@ -181,22 +180,46 @@ Start interactive mode by running `yappus` without arguments:
 - `/key [reset]` - Check or reset API key
 - `/export [path]` - Export chat history to file
 - `/clear` - Clear the terminal screen
+- `/file <path> [query]` - Include file content in conversation
+- `/ls [path]` - List directory contents
+- `/cd <path>` - Change directory
+- `/pwd` - Show current directory
 - `exit` - Exit the application
+
+#### Advanced Features
+
+**Command Piping**: Combine shell commands with AI queries
+```bash
+> /ls | what programming languages are used in this project?
+> /pwd | what should I do in this directory?
+```
+
+**File Context Analysis**: 
+```bash
+> /file package.json
+> What dependencies does this project use?
+> How can I optimize this configuration?
+```
 
 ## Available Models
 
 - `GEMINI_FLASH` (2.0) - Default model, latest and greatest
-- `GEMINI_2_5_FLASH` - High performance with excellent reasoning
 - `GEMINI_2_5_PRO` - Most capable model for complex tasks
-- `GEMINI_1_5_FLASH` - Fast and efficient
+- `GEMINI_2_5_FLASH` - High performance with excellent reasoning
 - `GEMINI_1_5_PRO` - Powerful legacy model
+- `GEMINI_1_5_FLASH` - Fast and efficient
 
-
+Switch models anytime:
+```bash
+yappus model GEMINI_2_5_PRO  # CLI
+/model GEMINI_2_5_PRO        # Interactive
+```
 
 ### APT Building
 ```sh
 docker run --rm -v $(pwd):/build -w /build debian:bookworm bash -c "apt-get update && apt-get install -y build-essential debhelper curl pkg-config libssl-dev && curl -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain stable && export PATH=\$HOME/.cargo/bin:\$PATH && dpkg-buildpackage -us -uc -b -d && cp -v /*.deb /build/"
 ```
+
 ## License
 
 [MIT License](LICENSE)
