@@ -5,7 +5,7 @@ echo "Installing Yappus Terminal v1.1.0..."
 
 # Download the latest .deb package
 echo "Downloading package..."
-curl -L -o /tmp/yappus-term_1.1.0-1_amd64.deb https://github.com/MostlyKIGuess/Yappus-Term/releases/latest/download/yappus-term_1.1.0-1_amd64.deb
+curl -L -o /tmp/yappus-term_1.1.0-1_amd64.deb https://github.com/MostlyKIGuess/Yappus-Term/releases/download/v1.1.0/yappus-term_1.1.0-1_amd64.deb
 
 if [ $? -ne 0 ]; then
     echo "Failed to download Yappus Terminal package"
