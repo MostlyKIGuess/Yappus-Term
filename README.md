@@ -21,6 +21,7 @@ Local options coming soon using ollama.
 - Context awareness that maintains conversation flow
 
 ## In Works
+
 - [ ] Using history for more context.
 - [x] Using current directory and .git for more knowledge.
 - [ ]Using history to predict next questions and help.
@@ -31,11 +32,11 @@ Local options coming soon using ollama.
 ## Prerequisites
 
 - Rust and Cargo (latest stable version)
-- A Google Gemini API key (obtain from https://aistudio.google.com/app/apikey)
+- A Google Gemini API key (obtain from <https://aistudio.google.com/app/apikey>)
 
 ## Installation
 
-### For Debian/Ubuntu-based systems:
+### For Debian/Ubuntu-based systems
 
 You can install Yappus directly from our APT repository:
 
@@ -48,11 +49,25 @@ chmod +x install-yappus.sh
 # runnn
 ./install-yappus.sh
 ```
-### For Arch Linux:
+
+### For Arch Linux
 
 Install from the AUR:
+
 ```sh
 yay -S yappus
+```
+
+### For Windows
+
+You can install Yappus directly using our PowerShell script:
+
+```powershell
+# install script 
+Invoke-WebRequest -Uri https://raw.githubusercontent.com/MostlyKIGuess/Yappus-Term/main/install-yappus.ps1 -OutFile install-yappus.ps1
+
+# (may need to run PowerShell as Administrator for system-wide installation)
+powershell -ExecutionPolicy Bypass -File install-yappus.ps1
 ```
 
 Or manually using the PKGBUILD:
@@ -66,6 +81,7 @@ makepkg -si
 ## Setup
 
 1. Clone the repository:
+
    ```bash
    git clone https://github.com/MostlyKIGuess/Yappus-Term.git
    cd yappus-term
@@ -114,10 +130,12 @@ yappus
 ## Configuration
 
 Yappus stores its configuration and history files in:
+
 - Linux/macOS: `~/.config/yappus-term/`
 - Windows: `%APPDATA%\yappus\yappus-term\config\`
 
 The following files are created:
+
 - `api_key` - Stores your Gemini API key
 - `config.json` - Stores your preferred model configuration
 - `chat_history.json` - Stores your chat history
@@ -168,7 +186,7 @@ Start interactive mode by running `yappus` without arguments:
 - The AI will respond with its message
 - Type `exit` to quit the application
 
-#### Available Interactive Commands:
+#### Available Interactive Commands
 
 - `/help` - Show help message with available commands
 - `/model [name]` - View or change the Gemini model
@@ -189,12 +207,14 @@ Start interactive mode by running `yappus` without arguments:
 #### Advanced Features
 
 **Command Piping**: Combine shell commands with AI queries
+
 ```bash
 > /ls | what programming languages are used in this project?
 > /pwd | what should I do in this directory?
 ```
 
-**File Context Analysis**: 
+**File Context Analysis**:
+
 ```bash
 > /file package.json
 > What dependencies does this project use?
@@ -210,12 +230,14 @@ Start interactive mode by running `yappus` without arguments:
 - `GEMINI_1_5_FLASH` - Fast and efficient
 
 Switch models anytime:
+
 ```bash
 yappus model GEMINI_2_5_PRO  # CLI
 /model GEMINI_2_5_PRO        # Interactive
 ```
 
 ### APT Building
+
 ```sh
 docker run --rm -v $(pwd):/build -w /build debian:bookworm bash -c "apt-get update && apt-get install -y build-essential debhelper curl pkg-config libssl-dev && curl -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain stable && export PATH=\$HOME/.cargo/bin:\$PATH && dpkg-buildpackage -us -uc -b -d && cp -v /*.deb /build/"
 ```
