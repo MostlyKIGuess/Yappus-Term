@@ -58,6 +58,14 @@ Install from the AUR:
 yay -S yappus
 ```
 
+Or manually using the PKGBUILD:
+
+```sh
+git clone https://github.com/MostlyKIGuess/Yappus-Term.git
+cd Yappus-Term
+makepkg -si
+```
+
 ### For Windows
 
 You can install Yappus directly using our PowerShell script:
@@ -68,14 +76,6 @@ Invoke-WebRequest -Uri https://raw.githubusercontent.com/MostlyKIGuess/Yappus-Te
 
 # (may need to run PowerShell as Administrator for system-wide installation)
 powershell -ExecutionPolicy Bypass -File install-yappus.ps1
-```
-
-Or manually using the PKGBUILD:
-
-```sh
-git clone https://github.com/MostlyKIGuess/Yappus-Term.git
-cd Yappus-Term
-makepkg -si
 ```
 
 ## Setup
