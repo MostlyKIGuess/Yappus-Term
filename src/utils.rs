@@ -388,17 +388,14 @@ pub fn set_model(model_name: &str, config_dir: &Path) -> bool {
     let config_file = config_dir.join("config.json");
     let model = match model_name.to_uppercase().as_str() {
         "GEMINI_1_5_FLASH" => "GEMINI_1_5_FLASH",
-        "GEMINI_1_5_PRO_002" => "GEMINI_1_5_PRO_002",
         "GEMINI_1_5_PRO" => "GEMINI_1_5_PRO",
-        "GEMINI_1_5_FLASH_002" => "GEMINI_1_5_FLASH_002",
-        "GEMINI_1_5_FLASH_8B" => "GEMINI_1_5_FLASH_8B",
-        "GEMINI_1_0_PRO" => "GEMINI_1_0_PRO",
+        "GEMINI_2_5_FLASH" => "GEMINI_2_5_FLASH",
+        "GEMINI_2_5_PRO" => "GEMINI_2_5_PRO",
         _ => {
-            println!("Invalid model name. Using default GEMINI_1_5_FLASH");
-            "GEMINI_1_5_FLASH"
+            println!("Invalid model name. Using default GEMINI_FLASH");
+            "GEMINI_FLASH"
         }
     };
-
     // Write to config file
     let config = serde_json::json!({ "model": model });
 
