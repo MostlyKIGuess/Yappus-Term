@@ -72,6 +72,7 @@ catch {
 
 Write-Host "Building Yappus Terminal..." -ForegroundColor Cyan
 try {
+    rustup default stable
     cargo build --release
 }
 catch {
