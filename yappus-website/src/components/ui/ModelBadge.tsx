@@ -1,24 +1,26 @@
-import React from "react";
+import React from 'react';
 
 interface ModelBadgeProps {
   name: string;
   description: string;
-  colorClass?: string;
+  isCurrent?: boolean;
 }
 
-export default function ModelBadge({
-  name,
-  description,
-  colorClass = "from-green-500 to-emerald-600",
-}: ModelBadgeProps) {
+export default function ModelBadge({ name, description, isCurrent }: ModelBadgeProps) {
   return (
-    <div className="flex flex-col">
-      <div
-        className={`text-xs font-semibold bg-gradient-to-r ${colorClass} rounded px-2 py-1 text-white inline-block w-fit`}
-      >
-        {name}
+    <div className={`p-4 rounded-lg border transition-all duration-200 ease-out
+                    ${isCurrent ? 'bg-slate-700/60 border-slate-600 shadow-md' : 'bg-neutral-800/70 border-neutral-700 hover:border-neutral-600'}`}>
+      <div className="flex items-center justify-between mb-1">
+        <span className={`text-sm font-semibold ${isCurrent ? 'text-sky-300' : 'text-slate-200'}`}>
+          {name}
+        </span>
+        {isCurrent && (
+          <span className="text-xs bg-sky-500/30 text-sky-300 px-2 py-0.5 rounded-full font-medium">
+            Current
+          </span>
+        )}
       </div>
-      <span className="text-xs text-gray-400 mt-1">{description}</span>
+      <p className="text-xs text-slate-400">{description}</p>
     </div>
   );
 }

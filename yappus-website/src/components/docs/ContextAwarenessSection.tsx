@@ -1,43 +1,49 @@
 import React from 'react';
+import { FiMessageCircle, FiFileText, FiGitBranch } from 'react-icons/fi';
+import { motion } from 'framer-motion';
+
+const contextFeatures = [
+  {
+    icon: <FiMessageCircle className="w-6 h-6 text-purple-400" />,
+    title: "Conversation Flow",
+    description: "Yappus remembers previous parts of your current conversation, allowing for natural follow-up questions and more relevant AI responses without needing to repeat context."
+  },
+  {
+    icon: <FiFileText className="w-6 h-6 text-orange-400" />,
+    title: "File Content Integration",
+    description: "Use the `/file <path>` command to load a file's content directly into the conversation context. The AI can then answer questions or perform tasks based on that specific file."
+  },
+  {
+    icon: <FiGitBranch className="w-6 h-6 text-teal-400" />,
+    title: "Directory & Git Awareness",
+    description: "Yappus automatically includes information about your current working directory and (if applicable) your current Git branch and repository status as part of the context provided to the AI."
+  }
+];
 
 export default function ContextAwarenessSection() {
   return (
-    <div className="py-16 px-4 md:px-8 max-w-6xl mx-auto" id="context-awareness">
-      <h3 className="text-4xl font-semibold mb-4 text-emerald-400">
-        Context Awareness
-      </h3>
-      <div className="mt-10 space-y-8 text-gray-300">
-        <div>
-          <h3 className="text-2xl font-semibold text-white mb-4">Persistent Conversation Context</h3>
-          <p className="mb-4">
-            Yappus Terminal maintains context between your queries, enabling more coherent and relevant AI responses.
-            The terminal preserves conversation history, allowing the AI to reference previous exchanges and provide
-            more accurate answers based on the full context of your conversation.
-          </p>
-          
-          <div className="bg-gray-800 rounded-lg p-4 font-mono text-sm mt-4">
-            <p className="text-green-400">$ yappus What is JavaScript?</p>
-            <p className="text-gray-400 mt-2">JavaScript is a programming language commonly used for web development...</p>
-            <p className="text-green-400 mt-3">$ yappus What about TypeScript?</p>
-            <p className="text-gray-400 mt-2">TypeScript is a superset of JavaScript that adds static type definitions...</p>
-          </div>
-        </div>
-        
-        <div>
-          <h3 className="text-2xl font-semibold text-white mb-4">File Context Integration</h3>
-          <p className="mb-4">
-            Yappus seamlessly incorporates file content into your AI conversations. Reference files using
-            the <code className="bg-gray-700 px-1 rounded">/file</code> command to make them part of the
-            conversation context.
-          </p>
-          
-          <div className="bg-gray-800 rounded-lg p-4 font-mono text-sm mt-4">
-            <p className="text-green-400">$ yappus /file src/utils.js</p>
-            <p className="text-gray-400 mt-2">File content added to conversation context.</p>
-            <p className="text-green-400 mt-3">$ yappus What does the parseConfig function do?</p>
-            <p className="text-gray-400 mt-2">The parseConfig function in your utils.js file parses the JSON configuration...</p>
-          </div>
-        </div>
+    <div>
+      <h3 className="text-2xl font-semibold text-slate-100 mb-3 text-center sm:text-left">Context Awareness</h3>
+      <p className="text-slate-400 mb-8 text-center sm:text-left">
+        Yappus understands the context of your work for smarter interactions.
+      </p>
+      <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
+        {contextFeatures.map((feature, index) => (
+          <motion.div
+            key={feature.title}
+            className="bg-neutral-800/70 rounded-xl border border-neutral-700/80 p-6 shadow-lg backdrop-blur-sm flex flex-col items-start"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.5, delay: index * 0.1, ease: "easeOut" }}
+          >
+            <div className="p-2.5 rounded-lg bg-neutral-700/60 mb-4">
+              {feature.icon}
+            </div>
+            <h4 className="text-lg font-semibold text-slate-100 mb-2">{feature.title}</h4>
+            <p className="text-sm text-slate-400 flex-grow">{feature.description}</p>
+          </motion.div>
+        ))}
       </div>
     </div>
   );

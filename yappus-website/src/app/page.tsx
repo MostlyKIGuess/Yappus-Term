@@ -11,17 +11,15 @@ import DocumentationSection from "../components/docs/DocumentationSection";
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-black text-white">
+    <div className="min-h-screen bg-neutral-900 text-slate-200 selection:bg-slate-600 selection:text-slate-100"> 
       <Header />
-
-      <main>
+      <main className="overflow-x-hidden">
         <HeroSection />
         <TerminalPreview />
         <InstallationSection />
         <DocumentationSection />
         <FeaturesSection />
       </main>
-
       <Footer />
     </div>
   );

@@ -1,47 +1,69 @@
-import React from "react";
-import ExampleQuery from "../ui/ExampleQuery";
+import React from 'react';
+import { motion } from 'framer-motion';
+
+const examples = [
+  {
+    title: "Code Generation",
+    description: "Ask Yappus to write a Python script to fetch weather data.",
+    conversation: [
+      { user: "> Generate a Python script to get weather from an API" },
+      { ai: "Sure, here's a Python script using the requests library and OpenWeatherMap API:\n```python\nimport requests\nimport json\n\nAPI_KEY = 'YOUR_API_KEY'\nCITY = 'London'\nURL = f'http://api.openweathermap.org/data/2.5/weather?q={CITY}&appid={API_KEY}&units=metric'\n\nresponse = requests.get(URL)\nif response.status_code == 200:\n  data = response.json()\n  main = data['main']\n  print(f\"Weather in {CITY}: {data['weather'][0]['description']}, Temp: {main['temp']}°C\")\nelse:\n  print('Error fetching weather data')\n```" }
+    ]
+  },
+  {
+    title: "File Context Analysis",
+    description: "Analyze a configuration file and ask for improvements.",
+    conversation: [
+      { user: "> /file Dockerfile" },
+      { ai: "File content from Dockerfile added to context." },
+      { user: "> What could be improved in this Dockerfile for a Node.js app?" },
+      { ai: "Based on your Dockerfile, consider these improvements:\n1. Use a more specific base image (e.g., `node:18-alpine`).\n2. Implement multi-stage builds to reduce final image size.\n3. Ensure you're copying only necessary files (`.dockerignore`).\n4. Run as a non-root user for better security." }
+    ]
+  },
+  {
+    title: "Command Piping & Explanation",
+    description: "Pipe a shell command and ask Yappus to explain it.",
+    conversation: [
+      { user: "> /ls | what is this project?" },
+      { ai: "Looks like your downloads directory to me." }
+    ]
+  }
+];
 
 export default function ExamplesSection() {
   return (
-    <div className="bg-gray-800/50 rounded-xl p-8 backdrop-blur-sm">
-      <h3 className="text-2xl font-semibold mb-4 text-emerald-400">
-        Example Use Cases
-      </h3>
-      <p className="text-gray-300 mb-6">
-        Here are some useful examples to try with Yappus:
-      </p>
-
-      <div className="space-y-4">
-        <ExampleQuery
-          query="How do I find large files in Linux?"
-          response="find / -type f -size +100M -exec ls -lh {} \; | sort -rh"
-        />
-        <ExampleQuery
-          query="Write a bash script to backup my home directory"
-          response={`#!/bin/bash\n\nBACKUP_DIR="/backup/\$(date +%Y-%m-%d)"\nmkdir -p \$BACKUP_DIR\ntar -czf \$BACKUP_DIR/home_backup.tar.gz /home/username\necho "Backup completed: \$BACKUP_DIR/home_backup.tar.gz"`}
-        />
-        <ExampleQuery
-          query="Explain the difference between tar and zip"
-          response="TAR: Archive tool that bundles files without compression by default. Add compression with flags like -z (gzip). Good for preserving Unix permissions.\n\nZIP: Both archives and compresses files. Better cross-platform compatibility with Windows. Allows adding/extracting single files without processing the whole archive."
-        />
-        <ExampleQuery
-          query="Switch to the most powerful model"
-          response={`$ yappus model GEMINI_2_5_PRO
-Model set to: GEMINI_2_5_PRO
-
-$ yappus "Analyze this complex algorithm for me"
-Analyzing with Gemini 2.5 Pro - the most capable model for complex reasoning tasks...`}
-        />
-        <ExampleQuery
-          query="Code Analysis with File Context"
-          response={`$ yappus /file src/app.js
-File content added to conversation context.
-$ yappus What could be improved in this code?
-Based on the file content, here are some suggestions:
-1. Add input validation for the user data
-2. Implement error handling for the API calls
-3. Consider using async/await instead of promises`}
-        />
+    <div>
+      <h3 className="text-2xl font-semibold text-slate-100 mb-3 text-center sm:text-left">Usage Examples</h3>
+      <p className="text-slate-400 mb-8 text-center sm:text-left">See Yappus in action with these common use cases.</p>
+      <div className="space-y-8">
+        {examples.map((example, index) => (
+          <motion.div 
+            key={example.title}
+            className="bg-neutral-800/70 rounded-xl border border-neutral-700/80 shadow-lg overflow-hidden backdrop-blur-sm"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.5, delay: index * 0.1, ease: "easeOut" }}
+          >
+            <div className="p-5 border-b border-neutral-700/80">
+              <h4 className="text-lg font-semibold text-slate-100">{example.title}</h4>
+              <p className="text-sm text-slate-400 mt-1">{example.description}</p>
+            </div>
+            <div className="p-5 font-mono text-xs sm:text-sm leading-relaxed">
+              {example.conversation.map((line, i) => line.user ? (
+                  <div key={i} className="mb-2">
+                    <span className="text-slate-500 select-none">{line.user.startsWith('>') ? '' : '$ '}</span>
+                    <span className="text-slate-200">{line.user}</span>
+                  </div>
+                ) : (
+                  <div key={i} className="mb-2 pl-2 border-l-2 border-sky-500/40">
+                    <pre className="whitespace-pre-wrap text-slate-300">{line.ai}</pre>
+                  </div>
+                )
+              )}
+            </div>
+          </motion.div>
+        ))}
       </div>
     </div>
   );

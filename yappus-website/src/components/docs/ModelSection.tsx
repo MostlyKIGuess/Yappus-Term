@@ -1,59 +1,28 @@
-import React from "react";
-import DocExample from "../ui/DocExample";
-import ModelBadge from "../ui/ModelBadge";
+import React from 'react';
+import ModelBadge from '../ui/ModelBadge';
 
-export default function ModelSection() {
+const models = [
+  { name: "GEMINI_FLASH", description: "Default model, latest and greatest from Gemini 2.0 series.", isCurrent: true },
+  { name: "GEMINI_2_5_PRO", description: "Most capable model for complex tasks and reasoning." },
+  { name: "GEMINI_2_5_FLASH", description: "High performance with excellent reasoning capabilities." },
+  { name: "GEMINI_1_5_PRO", description: "Powerful legacy model, good for general purpose tasks." },
+  { name: "GEMINI_1_5_FLASH", description: "Fast and efficient legacy model." },
+];
+
+export default function ModelsSection() {
   return (
-    <div className="bg-gray-800/50 rounded-xl p-8 backdrop-blur-sm">
-      <h3 className="text-2xl font-semibold mb-4 text-emerald-400">
-        Model Selection
-      </h3>
-      <p className="text-gray-300 mb-6">
-        Yappus supports multiple Gemini models with different
-        capabilities:
+    <div>
+      <h3 className="text-2xl font-semibold text-slate-100 mb-3 text-center sm:text-left">Available Models</h3>
+      <p className="text-slate-400 mb-8 text-center sm:text-left">
+        Yappus supports various Gemini models. You can switch between them using 
+        <code className="bg-neutral-700/80 text-sky-300 px-1.5 py-0.5 rounded-md text-xs mx-1">yappus model [MODEL_NAME]</code> or 
+        <code className="bg-neutral-700/80 text-sky-300 px-1.5 py-0.5 rounded-md text-xs mx-1">/model [MODEL_NAME]</code>.
       </p>
-
-      <div className="grid md:grid-cols-2 gap-6">
-        <DocExample
-          title="View Available Models"
-          description="See all available AI models"
-          command="yappus model"
-        />
-        <DocExample
-          title="Change Model"
-          description="Switch to a more powerful model"
-          command="yappus model GEMINI_2_5_PRO"
-        />
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
+        {models.map(model => (
+          <ModelBadge key={model.name} name={model.name} description={model.description} isCurrent={model.isCurrent} />
+        ))}
       </div>
-
-      
-            <div className="mt-6 grid grid-cols-2 md:grid-cols-3 gap-4">
-              <ModelBadge
-                name="GEMINI_FLASH"
-                description="Latest Gemini 2.0 model (default)"
-                colorClass="from-emerald-500 to-green-600"
-              />
-              <ModelBadge
-                name="GEMINI_2_5_PRO"
-                description="Most powerful for complex tasks"
-                colorClass="from-purple-500 to-pink-500"
-              />
-              <ModelBadge
-                name="GEMINI_2_5_FLASH"
-                description="High performance with excellent reasoning"
-                colorClass="from-blue-500 to-indigo-600"
-              />
-              <ModelBadge
-                name="GEMINI_1_5_PRO"
-                description="Very capable legacy model"
-                colorClass="from-orange-500 to-red-600"
-              />
-              <ModelBadge
-                name="GEMINI_1_5_FLASH"
-                description="Fast and efficient responses"
-                colorClass="from-yellow-500 to-amber-600"
-              />
-            </div>
     </div>
   );
 }

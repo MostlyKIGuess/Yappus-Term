@@ -1,27 +1,21 @@
-import React from "react";
-import BasicUsageSection from "./BasicUsageSection";
-import ModelSection from "./ModelSection";
-import HistorySection from "./HistorySection";
-import ConfigSection from "./ConfigSection";
-import CommandsSection from "./CommandsSection";
-import ExamplesSection from "./ExamplesSection";
-import ContextAwarenessSection from "./ContextAwarenessSection";
+import React from 'react';
+import SectionContainer from '../SectionContainer';
+import CommandsSection from './CommandsSection';
+import ExamplesSection from './ExamplesSection';
+import HistorySection from './HistorySection';
+import ContextAwarenessSection from './ContextAwarenessSection'; 
+import ModelsSection from './ModelSection';
+
 export default function DocumentationSection() {
   return (
-    <section id="docs" className="px-4 py-20 max-w-7xl mx-auto">
-      <h2 className="text-4xl font-bold text-center mb-16">
-        Documentation
-      </h2>
-
-      <div className="space-y-12">
-        <BasicUsageSection />
-        <ModelSection />
-        <HistorySection />
-        <ConfigSection />
+    <SectionContainer id="documentation" title="Documentation" subtitle="Learn how to use Yappus Terminal effectively">
+      <div className="space-y-16 md:space-y-20">
         <CommandsSection />
-        <ContextAwarenessSection/>
         <ExamplesSection />
+        <ModelsSection />
+        <HistorySection />
+        <ContextAwarenessSection />
       </div>
-    </section>
+    </SectionContainer>
   );
 }

@@ -1,48 +1,58 @@
-import React from "react";
+import React from 'react';
+import { motion } from 'framer-motion';
+
+const terminalConversation = [
+  { type: 'prompt', text: 'yappus' },
+  { type: 'ai', text: "Welcome to Yappus Terminal! Type 'exit' to quit or '/help' for commands." },
+  { type: 'prompt', text: 'How do I find large files in Linux?' },
+  { type: 'ai', text: "To find large files in Linux, you can use the 'find' command:" },
+  { type: 'code', text: 'find / -type f -size +100M -print0 | xargs -0 du -h | sort -rh' },
+  { type: 'prompt', text: '/file package.json' },
+  { type: 'ai', text: 'File content from package.json added to context.' },
+  { type: 'prompt', text: 'What are the main dependencies?' },
+  { type: 'ai', text: 'Based on package.json, the main dependencies are: react, next, tailwindcss.' },
+  { type: 'cursor', text: ''}
+];
 
 export default function TerminalPreview() {
   return (
-    <section className="px-4 py-2 max-w-5xl mx-auto">
-      <div className="bg-gray-900 rounded-lg border border-gray-700 shadow-xl overflow-hidden">
-        <div className="bg-gray-800 px-4 py-2 flex items-center">
-          <div className="flex space-x-2">
-            <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-            <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-            <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+    <section className="py-16 md:py-24 px-4">
+      <motion.div 
+        className="max-w-3xl mx-auto bg-neutral-800/60 rounded-xl border border-neutral-700/80 shadow-2xl overflow-hidden backdrop-blur-sm"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ duration: 0.7, ease: "easeOut" }}
+      >
+        <div className="bg-neutral-700/50 px-4 py-2.5 flex items-center border-b border-neutral-700/80">
+          <div className="flex space-x-1.5">
+            <div className="w-3 h-3 bg-red-500/70 rounded-full opacity-80"></div>
+            <div className="w-3 h-3 bg-yellow-500/70 rounded-full opacity-80"></div>
+            <div className="w-3 h-3 bg-green-500/70 rounded-full opacity-80"></div>
           </div>
-          <p className="ml-4 text-gray-400 text-sm">yappus-terminal</p>
+          <p className="ml-auto text-neutral-400 text-xs font-medium">yappus@terminal</p>
         </div>
-        <div className="p-4 font-mono text-sm">
-          <p className="text-gray-400">$ yappus</p>
-          <p className="text-green-500 mt-2">
-            Welcome to Yappus Terminal! Type &apos;exit&apos; to quit or
-            &apos;/help&apos; for commands.
-          </p>
-          <p className="mt-4 text-gray-400">
-            &gt; How do I find large files in Linux?
-          </p>
-          <p className="mt-2 text-blue-400">
-            To find large files in Linux, you can use the &apos;find&apos;
-            command with the &apos;-size&apos; parameter:
-          </p>
-          <p className="mt-1 text-yellow-400">
-            find / -type f -size +100M -exec ls -lh {} \; | sort -rh
-          </p>
-          <p className="mt-4 text-gray-400">&gt; yappus /file package.json</p>
-          <p className="mt-2 text-blue-400">
-            Reading content from: package.json
-            This `package.json` file is the project&apos;s manifest. It describes the project&apos;s name, version, dependencies, and scripts.  Essentially, it tells your computer (and tools like Node.js) everything it needs to know about the project to build and run it.  Specifically, this one for a Next.js site using various frontend libraries..
-          </p>
-          <p className="text-gray-400 mt-4">&gt; yappus What dependencies does this project use?</p>
-          <p className="mt-2 text-blue-400">
-            Based on your package.json, this project uses:
-            - React v18.2.0
-            - Next.js v13.4.1
-            - TailwindCSS v3.3.2
-          </p>
-          <p className="text-gray-400 mt-4">&gt; _</p>
+        <div className="p-5 sm:p-6 font-mono text-sm leading-relaxed h-80 overflow-y-auto">
+          {terminalConversation.map((line, index) => (
+            <div key={index} className={`mt-${index === 0 ? '0' : '2'}`}>
+              {line.type === 'prompt' && (
+                <span className="text-slate-500 mr-1.5 select-none">$</span>
+              )}
+              {line.type === 'cursor' ? (
+                 <span className="text-slate-500 mr-1.5 select-none">$ <span className="bg-slate-200 w-2 h-4 inline-block animate-pulse align-middle"></span></span>
+              ) : (
+                <span className={
+                  line.type === 'ai' ? 'text-slate-300' :
+                  line.type === 'code' ? 'text-sky-400' :
+                  'text-slate-200' 
+                }>
+                  {line.text}
+                </span>
+              )}
+            </div>
+          ))}
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }
